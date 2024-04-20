@@ -7,6 +7,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,9 +23,11 @@ const LoginPage = () => {
       const data = await response.json();
       if (response.ok) {
         if (data.userType === 'ADMIN') {
-          navigate('/adminPage'); // Redirect to admin page
+          navigate(`/adminPage?firstName=${data.firstName}&lastName=${data.lastName}`);
+
         } else {
-          navigate('/userPage'); // Redirect to user page
+          navigate(`/userPage?firstName=${data.firstName}&lastName=${data.lastName}`);
+           // Redirect to user page
         }
  // Navigate to the prediction page
       } else {

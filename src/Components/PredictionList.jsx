@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import $ from 'jquery'; // Import jQuery for AJAX
-
+import './styles.css'; 
 function PredictionList() {
   const [predictions, setPredictions] = useState([]);
   
@@ -43,13 +43,13 @@ function PredictionList() {
   };
   
   return (
-    <div>
-      <h2>Predictions</h2>
-      <ul>
+    <div className="prediction-list-container">
+      <h2>Posts</h2>
+      <ul className="prediction-list">
         {predictions.map(prediction => (
-          <li key={prediction.id}>
-            <div>{prediction.text}</div>
-            <div>{prediction.prediction}</div>
+          <li key={prediction.id} className="prediction-item">
+           <div><span className="label">Text:</span> <span className="value">{prediction.text}</span></div>
+            <div><span className="label">Prediction:</span> <span className="value">{prediction.prediction}</span></div>
             <button onClick={() => handleDeletePrediction(prediction.id)}>Delete</button>
           </li>
         ))}
