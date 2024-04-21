@@ -1,16 +1,21 @@
-// LoginPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './styles.css'; // Import the CSS file
+import samplePhoto from './1.png'; // Import your sample photo
+import { FaEnvelope, FaLock } from 'react-icons/fa'; // Import icons
 
 const LoginPage = () => {
   const navigate = useNavigate(); // Hook for navigation
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return; // Prevent login if validation fails
+    }
+
     try {
       const response = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
@@ -24,42 +29,71 @@ const LoginPage = () => {
       if (response.ok) {
         if (data.userType === 'ADMIN') {
           navigate(`/adminPage?firstName=${data.firstName}&lastName=${data.lastName}`);
-
         } else {
           navigate(`/userPage?firstName=${data.firstName}&lastName=${data.lastName}`);
-           // Redirect to user page
         }
- // Navigate to the prediction page
+        alert('Login successful');
       } else {
         setError(data.error || 'An error occurred');
+        alert('Login failed. Please check your credentials.');
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred');
+      alert('An error occurred. Please try again later.');
     }
   };
 
+  const handleRegister = () => {
+    navigate('/registerPage'); // Navigate to the registration page
+  };
+
+  const validateForm = () => {
+    if (!email || !password) {
+      alert('Please fill in all fields.');
+      return false;
+    }
+    return true;
+  };
+
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleLogin}>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="login-container">
+      <h1>Hate Speech Detector</h1>
+      <div className="login-form-container">
+        <div className="login-form">
+          <h2>SIGN-IN</h2>
+          {error && <p className="error-message">{error}</p>}
+          <form onSubmit={handleLogin}>
+            <div className="input-container">
+              <label className={email ? "positioned-label" : ""}>
+                <FaEnvelope /> {/* Icon for email */}
+                Email:
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="input-container">
+              <label className={password ? "positioned-label" : ""}>
+                <FaLock /> {/* Icon for password */}
+                Password:
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button type="submit">Login</button>
+          </form>
+          <p>Not registered yet? <span className="register-link" onClick={handleRegister}>Register here</span>.</p>
+        </div>
+      </div>
+      <div className="photo-container">
+        <img src={samplePhoto} alt="Sample" className="photo" />
+      </div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const AdminLogout = () => {
       // Clear any user-related data from local storage if necessary
       // localStorage.removeItem('user'); // If you're using local storage
       // Navigate to the login page after logout
-      navigate('/loginPage');
+      navigate('/');
       // Show alert after successful logout
     } catch (error) {
       console.error('Logout failed:', error);

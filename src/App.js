@@ -16,11 +16,10 @@ function App() {
       <BrowserRouter>
       <Routes>
 <Route path="/registerPage" element={<RegisterPage/>}></Route>
-<Route path="/loginPage" element={<LoginPage setUserId={setUserId} />}></Route>
+<Route path="/" element={<LoginPage setUserId={setUserId} />}></Route>
 <Route path="/adminPage" element={<AdminPage/>}></Route>
 <Route path="/userPage" element={<UserPage id={userId}/>}></Route>
 
-<Route path="/loginPage" element={<LoginPage setUserId={setUserId} />} />
 
       </Routes>
       

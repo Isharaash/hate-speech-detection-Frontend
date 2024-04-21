@@ -10,6 +10,14 @@ const Prediction = () => {
 
   const handlePrediction = async () => {
     try {
+
+      if (text.trim() === '') {
+        // If input text is empty, display error message in alert box
+        const alertText = 'Please enter text for content.';
+        alert(alertText);
+        return; // Stop further execution
+      }
+  
       const response = await fetch('http://localhost:5000/predict', {
         method: 'POST',
         headers: {
@@ -20,7 +28,8 @@ const Prediction = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        alert('Text: ' + data.text + '\nPrediction Result: ' + data.prediction);
+        const alertText = `Text: ${data.text}\nPrediction Result: ${data.prediction}`;
+        alert(alertText);
         window.location.reload(); // Alert with prediction result
       } else {
         if (response.status === 401) {
@@ -43,7 +52,7 @@ const Prediction = () => {
         className="prediction-textarea"
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Enter text for prediction..."
+        placeholder="Enter text for content ..."
         rows={4}
         cols={50}
         required
