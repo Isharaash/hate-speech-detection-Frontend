@@ -11,7 +11,7 @@ function PredictionList() {
 
   const fetchPredictions = () => {
     $.ajax({
-      url: 'http://localhost:5000/api/predictions',
+      url: 'http://localhost:5000/api/view_post',
       method: 'GET',
       xhrFields: {
         withCredentials: true // Include this option for cross-origin requests with cookies
@@ -27,7 +27,7 @@ function PredictionList() {
 
   const handleDeletePrediction = (predictionId) => {
     $.ajax({
-      url: `http://localhost:5000/api/delete_prediction/${predictionId}`,
+      url: `http://localhost:5000/api/delete_post/${predictionId}`,
       method: 'DELETE',
       xhrFields: {
         withCredentials: true // Include this option for cross-origin requests with cookies
@@ -51,8 +51,7 @@ function PredictionList() {
       <ul className="prediction-list">
         {predictions.map(prediction => (
           <li key={prediction.id} className="prediction-item">
-           <div><span className="label">Text:</span> <span className="value">{prediction.text}</span></div>
-            <div><span className="label">Prediction:</span> <span className="value">{prediction.prediction}</span></div>
+           <div><span className="label">Text:</span> <span className="value">{prediction.text}</span></div><br/>
             <button onClick={() => handleDeletePrediction(prediction.id)}>Delete</button>
           </li>
         ))}

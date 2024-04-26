@@ -11,7 +11,7 @@ function TotalUsers() {
       const fetchTotalUsers = async () => {
         try {
           // Make a GET request to your API endpoint
-          const response = await axios.get('http://localhost:5000/api/total_users', { withCredentials: true });
+          const response = await axios.get('http://localhost:5000/api/admin/total_users', { withCredentials: true });
           
           // If successful, update the total users state
           setTotalUsers(response.data.total_users);

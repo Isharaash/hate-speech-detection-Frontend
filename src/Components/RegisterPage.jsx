@@ -145,8 +145,8 @@ const RegisterPage = () => {
           </form>
         </div>
       </div>
-      <div className="photo-container">
-        <img src={samplePhoto} alt="Sample" className="photo" />
+      <div className="photo-container2">
+        <img src={samplePhoto} alt="Sample" className="photo2" />
       </div>
     </div>
   );

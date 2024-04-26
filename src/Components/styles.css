@@ -440,17 +440,18 @@
 /* RegisterPage.css */
 
 /* Photo */
-.photo-container {
+.photo-container2 {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.photo {
-  max-width: 110%;
+.photo2 {
+  max-width: 120%;
   max-height: 100%;
   border-radius: 20px;
-  margin-left: -68px;
+  margin-left: -128px;
   margin-top: 101px;
+  
 }

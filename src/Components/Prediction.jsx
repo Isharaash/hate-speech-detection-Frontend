@@ -1,24 +1,21 @@
-// Prediction.js
-
 import React, { useState } from 'react';
 import PredictionList from './PredictionList';
 import './styles.css'; // Import CSS file
 
 const Prediction = () => {
   const [text, setText] = useState('');
+  const [predictionResult, setPredictionResult] = useState('');
   const [error, setError] = useState('');
+  const [refreshKey, setRefreshKey] = useState(0); // Key to force refresh PredictionList
 
   const handlePrediction = async () => {
     try {
-
       if (text.trim() === '') {
-        // If input text is empty, display error message in alert box
-        const alertText = 'Please enter text for content.';
-        alert(alertText);
+        alert('Please enter text for content.');
         return; // Stop further execution
       }
   
-      const response = await fetch('http://localhost:5000/predict', {
+      const response = await fetch('http://localhost:5000/api/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,9 +25,9 @@ const Prediction = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        const alertText = `Text: ${data.text}\nPrediction Result: ${data.prediction}`;
-        alert(alertText);
-        window.location.reload(); // Alert with prediction result
+        setPredictionResult(data.prediction);
+        // Update the key to trigger refresh of PredictionList
+        setRefreshKey(prevKey => prevKey + 1);
       } else {
         if (response.status === 401) {
           setError('Unauthorized access');
@@ -58,7 +55,13 @@ const Prediction = () => {
         required
       />
       <button className="prediction-button" onClick={handlePrediction}>Predict</button>
-      <PredictionList />
+      {predictionResult && (
+        <div>
+          <h3>Prediction Result:</h3>
+          <p>{predictionResult}</p>
+        </div>
+      )}
+      <PredictionList key={refreshKey} /> {/* Refresh PredictionList */}
     </div>
   );
 };
