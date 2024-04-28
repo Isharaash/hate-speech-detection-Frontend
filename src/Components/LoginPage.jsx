@@ -32,10 +32,10 @@ const LoginPage = () => {
         } else {
           navigate(`/userPage?firstName=${data.firstName}&lastName=${data.lastName}`);
         }
-        alert('Login successful!'); 
+        alert('Login successful'); 
       } else {
-        setError(data.error || 'An error occurred');
-        alert('Login failed. Please check your credentials.');
+        
+        alert('Login failed.');
       }
     } catch (error) {
       console.error('Error:', error);

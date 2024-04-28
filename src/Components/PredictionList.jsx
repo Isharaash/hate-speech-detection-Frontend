@@ -36,7 +36,7 @@ function PredictionList() {
         // Update predictions after deletion
         fetchPredictions();
         // Display alert box for successful deletion
-        alert('Prediction deleted successfully.');
+        alert('Content deleted successfully.');
       },
       error: (error) => {
         console.error('Error deleting prediction:', error);
