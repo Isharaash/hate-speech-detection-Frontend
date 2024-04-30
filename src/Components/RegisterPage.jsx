@@ -1,155 +1,65 @@
-import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa'; // Import icons
-import './styles.css'; // Import the CSS file
-import samplePhoto from './2.png'; // Import your sample photo
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import './styles.css'; 
 
-const RegisterPage = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '' // Added confirmPassword field
-  });
-
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      return; // Prevent form submission if validation fails
-    }
+function PredictionList() {
+  const [predictions, setPredictions] = useState([]);
   
-    try {
-      const response = await fetch('https://hate-speech-detection-backend-api.onrender.com/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+  useEffect(() => {
+    // Fetch predictions when component mounts
+    fetchPredictions();
+  }, []);
 
-      if (response.ok) {
-        setSuccess(true);
-        alert('Registration successful');
-        navigate('/');
-      } else {
-        const errorData = await response.json();
-        setError(errorData.error || 'Registration failed');
-        alert('Registration failed. Please check your inputs and try again.');
+  const fetchPredictions = () => {
+    fetch('https://hate-speech-detection-backend-api.onrender.com/api/view_post', {
+      method: 'GET',
+      credentials: 'include' // Include credentials for cross-origin requests with cookies
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error fetching predictions');
       }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again later.');
-    }
+      return response.json();
+    })
+    .then(data => {
+      setPredictions(data.predictions);
+    })
+    .catch(error => {
+      console.error('Error fetching predictions:', error);
+    });
+  };
+
+  const handleDeletePrediction = (predictionId) => {
+    fetch(`https://hate-speech-detection-backend-api.onrender.com/api/delete_post/${predictionId}`, {
+      method: 'DELETE',
+      credentials: 'include' // Include credentials for cross-origin requests with cookies
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error deleting prediction');
+      }
+      // Update predictions after deletion
+      fetchPredictions();
+      // Display alert box for successful deletion
+      alert('Content deleted successfully.');
+    })
+    .catch(error => {
+      console.error('Error deleting prediction:', error);
+    });
   };
   
-  const handleLogin = () => {
-    navigate('/'); // Navigate to the login page
-  };
-
-  const validateForm = () => {
-    const { firstName, lastName, email, password, confirmPassword } = formData;
-
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      alert('Please fill in all fields.');
-      return false;
-    }
-
-    if (password !== confirmPassword) {
-      alert('Passwords do not match.');
-      return false;
-    }
-
-    return true;
-  };
-
   return (
-    <div className="register-container">
-      <h1>Hate Speech Detector</h1>
-      <div className="register-form-container">
-        <div className="register-form">
-          <h2>SIGN-UP</h2>
-          {error && <p className="error-message">{error}</p>}
-          {success && <p className="success-message">Registration successful</p>}
-          <form onSubmit={handleSubmit}>
-            <div className="input-container">
-              <label className={formData.firstName ? "positioned-label" : ""}>
-                <FaUser /> {/* Icon for First Name */}
-                First Name:
-              </label>
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-container">
-              <label className={formData.lastName ? "positioned-label" : ""}>
-                <FaUser /> {/* Icon for Last Name */}
-                Last Name:
-              </label>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-container">
-              <label className={formData.email ? "positioned-label" : ""}>
-                <FaEnvelope /> {/* Icon for Email */}
-                Email:
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-container">
-              <label className={formData.password ? "positioned-label" : ""}>
-                <FaLock /> {/* Icon for Password */}
-                Password:
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-container">
-              <label className={formData.confirmPassword ? "positioned-label" : ""}>
-                <FaLock /> {/* Icon for Confirm Password */}
-                Confirm Password:
-              </label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit">Register</button>
-            <p>Already registered? <span className="register-link" onClick={handleLogin}>Login here</span>.</p>
-          </form>
-        </div>
-      </div>
-      <div className="photo-container2">
-        <img src={samplePhoto} alt="Sample" className="photo2" />
-      </div>
+    <div className="prediction-list-container">
+      <h2>Posts</h2>
+      <ul className="prediction-list">
+        {predictions.map(prediction => (
+          <li key={prediction.id} className="prediction-item">
+            <div><span className="label">Text:</span> <span className="value">{prediction.text}</span></div><br/>
+            <button onClick={() => handleDeletePrediction(prediction.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
+}
 
-export default RegisterPage;
+export default PredictionList;
