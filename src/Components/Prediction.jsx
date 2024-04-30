@@ -15,7 +15,7 @@ const Prediction = () => {
         return; // Stop further execution
       }
   
-      const response = await fetch('https://hate-speech-detection-backend-app.onrender.com/api/post', {
+      const response = await fetch('https://hate-speech-detection-backend-api.onrender.com/api/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
