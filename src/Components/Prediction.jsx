@@ -15,7 +15,7 @@ const Prediction = () => {
         return; // Stop further execution
       }
   
-      const response = await fetch('https://inspiring-figolla-b9f092.netlify.app/api/post', {
+      const response = await fetch('https://hate-speech-detection-backend-api.onrender.com/api/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
