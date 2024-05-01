@@ -17,7 +17,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('https://hate-speech-detection-backend-api.onrender.com/api/login', {
+      const response = await fetch('https://hate-speech-detection-backend.vercel.app/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
