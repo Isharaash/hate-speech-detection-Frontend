@@ -15,29 +15,37 @@ const Prediction = () => {
         return; // Stop further execution
       }
   
-      const response = await fetch('https://hate-speech-detection-backend.vercel.app/api/post', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ text }),
-        credentials: 'include', // Include credentials for session management
-      });
+      const response = await fetchPrediction(text);
       const data = await response.json();
       if (response.ok) {
         setPredictionResult(data.prediction);
-        // Update the key to trigger refresh of PredictionList
+
         setRefreshKey(prevKey => prevKey + 1);
       } else {
-        if (response.status === 401) {
-          setError('Unauthorized access');
-        } else {
-          setError(data.error || 'An error occurred');
-        }
+        handlePredictionError(response, data);
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred');
+    }
+  };
+
+  const fetchPrediction = async (text) => {
+    return fetch('https://hate-speech-detection-backend.vercel.app/api/post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text }),
+      credentials: 'include', // Include credentials for session management
+    });
+  };
+
+  const handlePredictionError = (response, data) => {
+    if (response.status === 401) {
+      setError('Unauthorized access');
+    } else {
+      setError(data.error || 'An error occurred');
     }
   };
 
