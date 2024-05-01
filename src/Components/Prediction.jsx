@@ -54,6 +54,7 @@ const Prediction = () => {
       <h2 className="prediction-heading">Content :</h2>
       {error && <p className="error-message">{error}</p>}
       <textarea
+        id="contentTextarea"
         className="prediction-textarea"
         value={text}
         onChange={(e) => setText(e.target.value)}
