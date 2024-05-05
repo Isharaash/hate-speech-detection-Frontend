@@ -31,7 +31,7 @@ const Prediction = () => {
   };
 
   const fetchPrediction = async (text) => {
-    return fetch('https://hate-speech-detection-backend.vercel.app/api/post', {
+    return fetch('https://grand-brand-422408-b7.uc.r.appspot.com/api/post', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

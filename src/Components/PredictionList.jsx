@@ -11,7 +11,7 @@ function PredictionList() {
 
   const fetchPredictions = () => {
     $.ajax({
-      url: 'https://inspiring-figolla-b9f092.netlify.app/api/view_post',
+      url: 'https://grand-brand-422408-b7.uc.r.appspot.com/api/view_post',
       method: 'GET',
       xhrFields: {
         withCredentials: true // Include this option for cross-origin requests with cookies
@@ -27,7 +27,7 @@ function PredictionList() {
 
   const handleDeletePrediction = (predictionId) => {
     $.ajax({
-      url: `https://inspiring-figolla-b9f092.netlify.app/api/delete_post/${predictionId}`,
+      url: `https://grand-brand-422408-b7.uc.r.appspot.com/api/delete_post/${predictionId}`,
       method: 'DELETE',
       xhrFields: {
         withCredentials: true // Include this option for cross-origin requests with cookies

@@ -17,7 +17,7 @@ const LoginPage = () => {
     }
 
     try {
-      const response = await fetch('https://hate-speech-detection-backend-api.onrender.com/api/login', {
+      const response = await fetch('https://grand-brand-422408-b7.uc.r.appspot.com/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ const RegisterPage = () => {
     }
   
     try {
-      const response = await fetch('https://hate-speech-detection-backend-api.onrender.com/api/register', {
+      const response = await fetch('https://grand-brand-422408-b7.uc.r.appspot.com/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

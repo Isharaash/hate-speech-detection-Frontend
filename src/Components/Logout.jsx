@@ -15,7 +15,7 @@ const LogoutPage = () => {
 
     try {
       // Perform logout logic here, such as clearing session/local storage
-      await fetch('https://hate-speech-detection-backend-api.onrender.com/api/login', { method: 'POST' });
+      await fetch('https://grand-brand-422408-b7.uc.r.appspot.com/api/login', { method: 'POST' });
       // Clear any user-related data from local storage if necessary
       // localStorage.removeItem('user'); // If you're using local storage
       // Navigate to the login page after logout

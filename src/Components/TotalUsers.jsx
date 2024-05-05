@@ -11,7 +11,7 @@ function TotalUsers() {
       const fetchTotalUsers = async () => {
         try {
           // Make a GET request to your API endpoint
-          const response = await axios.get('https://hate-speech-detection-backend-api.onrender.com/api/admin/total_users', { withCredentials: true });
+          const response = await axios.get('https://grand-brand-422408-b7.uc.r.appspot.com/api/admin/total_users', { withCredentials: true });
           
           // If successful, update the total users state
           setTotalUsers(response.data.total_users);
